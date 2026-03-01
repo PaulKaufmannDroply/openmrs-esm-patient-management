@@ -4,6 +4,7 @@
     "fhir2": ">=1.2",
     "webservices.rest": "^2.24.0"
   },
+  "suppressedExtensions": ["set-user-location-link"],
   "extensions": [
     {
       "name": "MSI Mode Selector",
@@ -14,6 +15,11 @@
       "name": "MSI Outreach Banner",
       "component": "outreachBanner",
       "slot": "breadcrumbs-slot"
+    },
+    {
+      "name": "MSI Mode Config Sync",
+      "component": "modeConfigSync",
+      "slot": "top-nav-actions-slot"
     }
   ],
   "pages": []
