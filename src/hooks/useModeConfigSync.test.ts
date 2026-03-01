@@ -1,15 +1,17 @@
 import { renderHook } from '@testing-library/react';
-
-const mockProvide = jest.fn();
-const mockUseStore = jest.fn();
+import { useModeConfigSync } from './useModeConfigSync';
+import { provide, useStore } from '@openmrs/esm-framework';
 
 jest.mock('@openmrs/esm-framework', () => ({
-  useStore: mockUseStore,
-  provide: mockProvide,
+  useStore: jest.fn(),
+  provide: jest.fn(),
 }));
 jest.mock('../store/mode.store', () => ({
   modeStore: {},
 }));
+
+const mockUseStore = useStore as jest.Mock;
+const mockProvide = provide as jest.Mock;
 
 describe('useModeConfigSync', () => {
   beforeEach(() => {
@@ -18,7 +20,6 @@ describe('useModeConfigSync', () => {
 
   it('calls provide with address removed when mode is outreach', () => {
     mockUseStore.mockReturnValue({ mode: 'outreach', outreachLocation: null });
-    const { useModeConfigSync } = require('./useModeConfigSync');
     renderHook(() => useModeConfigSync());
     expect(mockProvide).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -26,13 +27,12 @@ describe('useModeConfigSync', () => {
           sections: expect.not.arrayContaining(['address']),
         }),
       }),
-      expect.any(String),
+      'msi-outreach-mode',
     );
   });
 
   it('calls provide with address included when mode is clinic', () => {
     mockUseStore.mockReturnValue({ mode: 'clinic', outreachLocation: null });
-    const { useModeConfigSync } = require('./useModeConfigSync');
     renderHook(() => useModeConfigSync());
     expect(mockProvide).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -40,7 +40,7 @@ describe('useModeConfigSync', () => {
           sections: expect.arrayContaining(['address']),
         }),
       }),
-      expect.any(String),
+      'msi-outreach-mode',
     );
   });
 });
