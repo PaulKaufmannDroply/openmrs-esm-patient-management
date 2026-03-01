@@ -2,7 +2,7 @@ import React from 'react';
 import { ComboBox } from '@carbon/react';
 import { useConfig } from '@openmrs/esm-framework';
 import { useAppMode } from '../../hooks/useAppMode';
-import { Config } from '../../config-schema';
+import { type Config } from '../../config-schema';
 
 export function OutreachBanner() {
   const { mode, outreachLocation, setOutreachLocation } = useAppMode();

@@ -1,4 +1,4 @@
-import { AppMode, AppModeStrategy } from './types';
+import { type AppMode, type AppModeStrategy } from './types';
 import { clinicStrategy } from './clinic.strategy';
 import { outreachStrategy } from './outreach.strategy';
 

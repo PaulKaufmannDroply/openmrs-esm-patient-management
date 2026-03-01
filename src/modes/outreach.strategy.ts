@@ -1,4 +1,4 @@
-import { AppModeStrategy } from './types';
+import { type AppModeStrategy } from './types';
 
 export const outreachStrategy: AppModeStrategy = {
   registration: {

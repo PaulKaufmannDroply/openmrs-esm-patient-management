@@ -1,5 +1,5 @@
 import { createGlobalStore } from '@openmrs/esm-framework';
-import { AppMode } from '../modes/types';
+import { type AppMode } from '../modes/types';
 
 interface ModeStore {
   mode: AppMode;
