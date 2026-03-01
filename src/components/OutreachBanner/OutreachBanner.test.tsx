@@ -1,6 +1,8 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { OutreachBanner } from './OutreachBanner';
+
+const mockSetOutreachLocation = jest.fn();
 
 jest.mock('../../hooks/useAppMode', () => ({
   useAppMode: jest.fn(),
@@ -15,38 +17,40 @@ jest.mock('@carbon/react', () => ({
       id={id}
       value={selectedItem?.label ?? ''}
       placeholder={placeholder}
-      onChange={(e) => onChange({ selectedItem: null, inputValue: e.target.value })}
-      readOnly={!onChange}
+      onChange={(e) => onChange({ selectedItem: { id: e.target.value, label: e.target.value }, inputValue: null })}
     />
   ),
 }));
 
+const { useAppMode } = require('../../hooks/useAppMode');
+
 describe('OutreachBanner', () => {
   beforeEach(() => {
-    jest.resetModules();
+    jest.clearAllMocks();
   });
 
   it('renders nothing in clinic mode', () => {
-    const { useAppMode } = require('../../hooks/useAppMode');
-    useAppMode.mockReturnValue({ mode: 'clinic', outreachLocation: null, setOutreachLocation: jest.fn() });
-    const { OutreachBanner } = require('./OutreachBanner');
+    useAppMode.mockReturnValue({ mode: 'clinic', outreachLocation: null, setOutreachLocation: mockSetOutreachLocation });
     const { container } = render(<OutreachBanner />);
     expect(container).toBeEmptyDOMElement();
   });
 
   it('shows a combobox in outreach mode', () => {
-    const { useAppMode } = require('../../hooks/useAppMode');
-    useAppMode.mockReturnValue({ mode: 'outreach', outreachLocation: null, setOutreachLocation: jest.fn() });
-    const { OutreachBanner } = require('./OutreachBanner');
+    useAppMode.mockReturnValue({ mode: 'outreach', outreachLocation: null, setOutreachLocation: mockSetOutreachLocation });
     render(<OutreachBanner />);
     expect(screen.getByRole('combobox')).toBeInTheDocument();
   });
 
   it('shows the current location as combobox value', () => {
-    const { useAppMode } = require('../../hooks/useAppMode');
-    useAppMode.mockReturnValue({ mode: 'outreach', outreachLocation: 'Grenzcamp Süd', setOutreachLocation: jest.fn() });
-    const { OutreachBanner } = require('./OutreachBanner');
+    useAppMode.mockReturnValue({ mode: 'outreach', outreachLocation: 'Grenzcamp Süd', setOutreachLocation: mockSetOutreachLocation });
     render(<OutreachBanner />);
     expect(screen.getByDisplayValue('Grenzcamp Süd')).toBeInTheDocument();
+  });
+
+  it('calls setOutreachLocation when user selects a location', () => {
+    useAppMode.mockReturnValue({ mode: 'outreach', outreachLocation: null, setOutreachLocation: mockSetOutreachLocation });
+    render(<OutreachBanner />);
+    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'Dorf Nord' } });
+    expect(mockSetOutreachLocation).toHaveBeenCalledWith('Dorf Nord');
   });
 });

@@ -27,6 +27,7 @@ export function OutreachBanner() {
           if (value) setOutreachLocation(value);
         }}
         size="sm"
+        allowCustomValue
       />
     </div>
   );
