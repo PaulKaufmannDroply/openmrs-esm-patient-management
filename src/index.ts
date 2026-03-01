@@ -18,3 +18,8 @@ export const modeSelector = getAsyncLifecycle(
   () => import('./components/ModeSelector/ModeSelector'),
   options,
 );
+
+export const outreachBanner = getAsyncLifecycle(
+  () => import('./components/OutreachBanner/OutreachBanner'),
+  options,
+);
