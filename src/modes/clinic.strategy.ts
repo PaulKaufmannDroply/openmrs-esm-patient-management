@@ -2,8 +2,8 @@ import { type AppModeStrategy } from './types';
 
 export const clinicStrategy: AppModeStrategy = {
   registration: {
-    visibleFields: ['address', 'phone', 'nationality', 'languages'],
-    requiredFields: ['address', 'phone'],
+    visibleFields: ['phone', 'nationality', 'languages'],
+    requiredFields: ['phone'],
     locationSource: 'address',
   },
   patientChart: {

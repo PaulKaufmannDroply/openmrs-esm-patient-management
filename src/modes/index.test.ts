@@ -20,8 +20,8 @@ describe('resolveStrategy', () => {
     expect(strategy.registration.visibleFields).not.toContain('address');
   });
 
-  it('clinic shows address field', () => {
+  it('clinic does not show address field', () => {
     const strategy = resolveStrategy('clinic');
-    expect(strategy.registration.visibleFields).toContain('address');
+    expect(strategy.registration.visibleFields).not.toContain('address');
   });
 });
