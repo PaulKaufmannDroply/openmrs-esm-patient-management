@@ -10,6 +10,9 @@ jest.mock('../../hooks/useAppMode', () => ({
     setOutreachLocation: jest.fn(),
   }),
 }));
+jest.mock('../../hooks/useModeConfigSync', () => ({
+  useModeConfigSync: jest.fn(),
+}));
 
 describe('ModeSelector', () => {
   beforeEach(() => jest.clearAllMocks());

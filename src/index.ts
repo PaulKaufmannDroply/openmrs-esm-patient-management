@@ -23,8 +23,3 @@ export const outreachBanner = getAsyncLifecycle(
   () => import('./components/OutreachBanner/OutreachBanner'),
   options,
 );
-
-export const modeConfigSync = getAsyncLifecycle(
-  () => import('./components/ModeConfigSync/ModeConfigSync'),
-  options,
-);

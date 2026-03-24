@@ -15,11 +15,6 @@
       "name": "MSI Outreach Banner",
       "component": "outreachBanner",
       "slot": "breadcrumbs-slot"
-    },
-    {
-      "name": "MSI Mode Config Sync",
-      "component": "modeConfigSync",
-      "slot": "top-nav-actions-slot"
     }
   ],
   "pages": []

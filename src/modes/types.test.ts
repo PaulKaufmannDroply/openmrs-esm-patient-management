@@ -1,4 +1,4 @@
-import { AppMode, AppModeStrategy } from './types';
+import { type AppMode, type AppModeStrategy } from './types';
 
 describe('AppModeStrategy type', () => {
   it('clinic strategy satisfies AppModeStrategy', () => {

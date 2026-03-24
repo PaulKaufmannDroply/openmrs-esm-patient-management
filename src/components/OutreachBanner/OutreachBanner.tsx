@@ -1,5 +1,4 @@
-import React from 'react';
-import { ComboBox } from '@carbon/react';
+import React, { useState } from 'react';
 import { useConfig } from '@openmrs/esm-framework';
 import { useAppMode } from '../../hooks/useAppMode';
 import { type Config } from '../../config-schema';
@@ -7,27 +6,30 @@ import { type Config } from '../../config-schema';
 export function OutreachBanner() {
   const { mode, outreachLocation, setOutreachLocation } = useAppMode();
   const { outreachLocations } = useConfig<Config>();
+  const [inputValue, setInputValue] = useState(outreachLocation ?? '');
 
   if (mode !== 'outreach') return null;
 
-  const items = outreachLocations.map((loc) => ({ id: loc, label: loc }));
+  const listId = 'outreach-locations-list';
+  const locations = outreachLocations ?? [];
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0 1rem' }}>
       <span style={{ fontWeight: 600, whiteSpace: 'nowrap' }}>Outreach-Modus</span>
-      <ComboBox
-        id="outreach-location-selector"
-        titleText=""
+      <datalist id={listId}>
+        {locations.map((loc) => (
+          <option key={loc} value={loc} />
+        ))}
+      </datalist>
+      <input
+        list={listId}
+        value={inputValue}
         placeholder="Standort wählen…"
-        items={items}
-        itemToString={(item) => item?.label ?? ''}
-        selectedItem={outreachLocation ? { id: outreachLocation, label: outreachLocation } : null}
-        onChange={({ selectedItem, inputValue }) => {
-          const value = selectedItem?.label ?? inputValue ?? '';
-          if (value) setOutreachLocation(value);
+        onChange={(e) => setInputValue(e.target.value)}
+        onBlur={() => {
+          if (inputValue && inputValue !== outreachLocation) setOutreachLocation(inputValue);
         }}
-        size="sm"
-        allowCustomValue
+        style={{ fontSize: '0.875rem', padding: '0.25rem 0.5rem', borderRadius: '4px', border: '1px solid #ccc' }}
       />
     </div>
   );

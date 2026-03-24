@@ -1,3 +1,4 @@
+import React from 'react';
 import { useModeConfigSync } from '../../hooks/useModeConfigSync';
 
 export function ModeConfigSync() {
